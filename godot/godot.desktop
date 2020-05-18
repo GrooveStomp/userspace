@@ -1,0 +1,14 @@
+[Desktop Entry]
+Version=1.0
+Name=Godot
+GenericName=Game Engine
+Exec=godot %f
+Comment=Build games
+Terminal=false
+Type=Application
+Categories=Game;Development;IDE;
+Icon=/usr/share/app-install/icons/godot.svg
+GenericName[en_US]=Game Engine
+StartupWMClass=Godot
+PrefersNonDefaultGPU=true
+MimeType=application/x-godot-project;
