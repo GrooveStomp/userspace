@@ -1,0 +1,12 @@
+# /etc/systemd/system/minidlna-mount-check.service
+
+[Unit]
+Description=Sets up minidlna when USB drive is inserted
+Wants=minidlna-mount-check.timer
+
+[Service]
+ExecStart=/usr/local/bin/minidlna-mount-check
+WorkingDirectory=/usr/local/bin
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,13 @@
+# /etc/systemd/system/minidlna-mount-check.timer
+
+[Unit]
+Description=Run minidlna mount check every 5 seconds
+Requires=minidlna-mount-check.service
+
+[Timer]
+Unit=minidlna-mount-check.service
+OnUnitInactiveSec=5s
+AccuracySec=1s
+
+[Install]
+WantedBy=timers.target

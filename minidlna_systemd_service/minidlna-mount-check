@@ -1,0 +1,35 @@
+#!/bin/sh
+# /usr/local/bin/minidlna-mount-check
+
+MEDIA_DRIVE="/run/media/gs/Media_Drive"
+MEDIA_MOUNT="/opt/minidlna/video"
+
+if [ ! -d $MEDIA_DRIVE ]; then
+    echo "Detected $MEDIA_DRIVE unmount"
+
+    if [ -d $MEDIA_MOUNT ] && [ ! $(mountpoint -q $MEDIA_MOUNT) ]; then
+        echo "unmounting $MEDIA_MOUNT"
+        umount $MEDIA_MOUNT
+        echo "removing $MEDIA_MOUNT"
+        rmdir $MEDIA_MOUNT
+    fi
+
+    [ $(systemctl is-active --quiet minidlna) ] && systemctl stop minidlna
+fi
+
+if [ -d $MEDIA_DRIVE ]; then
+    echo "Detected $MEDIA_DRIVE mount"
+
+    if [ ! -d $MEDIA_MOUNT ]; then
+         mkdir -p $MEDIA_MOUNT
+         echo "$MEDIA_MOUNT exists"
+
+         mount --bind $MEDIA_DRIVE/Movies $MEDIA_MOUNT
+         echo "mounted $MEDIA_DRIVE/Movies as $MEDIA_MOUNT"
+    fi
+
+    if [ "inactive" == $(systemctl is-active minidlna) ]; then
+        systemctl start minidlna
+        echo "started minidlna unit"
+    fi
+fi
