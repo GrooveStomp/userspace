@@ -4,7 +4,7 @@
 OS = $(shell uname | tr [:upper:] [:lower:])
 
 help:
-	./view_help README.md
+	./view_help.sh README.md
 
 install:
 	make install-$(OS)
