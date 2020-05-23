@@ -10,8 +10,8 @@ fi
 if [ -z "$(brew cask list textadept | grep -i textadept)" ]; then
     brew cask install textadept
     INSTALL_PATH=/Applications/TextAdept.app/Contents/MacOS
-	  sudo ln -fs $(INSTALL_PATH)/textadept_osx /usr/local/bin/ta
-	  sudo ln -fs $(INSTALL_PATH)/textadept-curses /usr/local/bin/ta-nox
+	  ln -fs $(INSTALL_PATH)/textadept_osx /usr/local/bin/ta
+	  ln -fs $(INSTALL_PATH)/textadept-curses /usr/local/bin/ta-nox
 else
     exit 0
 fi

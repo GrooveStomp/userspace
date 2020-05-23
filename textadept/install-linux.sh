@@ -2,10 +2,6 @@
 
 set -e
 
-echo "user: $USER"
-echo "user id: $EUID"
-echo "user id again: $(id -u)"
-
 if [ "linux" != "$(uname | tr [:upper:] [:lower:])" ]; then
     echo "This script is only valid on Linux systems"
     exit 1
