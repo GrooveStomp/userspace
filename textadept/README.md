@@ -1,7 +1,7 @@
 # Usage
 
     make help
-    sudo make install
+    make install
 
 # What it does
 - Install textadept if it isn't already installed.
