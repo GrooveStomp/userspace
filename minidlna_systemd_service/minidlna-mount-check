@@ -29,7 +29,12 @@ if [ -d $MEDIA_DRIVE ]; then
     fi
 
     if [ "inactive" == $(systemctl is-active minidlna) ]; then
+        minidlnad -R
         systemctl start minidlna
         echo "started minidlna unit"
+    else
+        minidlnad -R
+        systemctl restart minidlna
+        echo "restarted minidlna unit"
     fi
 fi
