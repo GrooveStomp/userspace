@@ -1,4 +1,10 @@
-This is for Linux only.
+# Dependencies
+- Linux system
+- systemd
+- git
+- [geminid](https://github.com/jovoro/geminid.git)
+
+If geminid is not available then we attempt to install it.
 
 # Usage
 
