@@ -1,0 +1,12 @@
+# /etc/systemd/system/geminid.service
+
+[Unit]
+Description=Runs geminid daemon
+
+[Service]
+ExecStart=/usr/local/bin/geminid -c /var/lib/gemini/geminid.conf
+Type=simple
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
