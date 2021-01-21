@@ -4,7 +4,7 @@
 Description=Runs geminid daemon
 
 [Service]
-ExecStart=/usr/local/bin/geminid -c /var/lib/gemini/geminid.conf
+ExecStart=/usr/local/bin/geminid -c /usr/local/src/gemlog/meta/geminid.conf
 Type=simple
 Restart=always
 
