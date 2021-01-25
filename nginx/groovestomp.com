@@ -20,16 +20,24 @@ server {
         }
     }
 
-    location /recipes {
+    location /recipes/ {
         alias /usr/local/src/recipes;
         index index.html;
         try_files $uri $uri/ =404;
     }
 
-    location /blog {
+    location /blog/ {
         alias /usr/local/src/blog;
         index index.html;
         try_files $uri $uri/ =404;
+    }
+
+    location /radicale/ {
+        proxy_pass        http://localhost:5232/; # The / is important!
+        proxy_set_header  X-Script-Name /radicale;
+        proxy_set_header  X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header  Host $http_host;
+        proxy_pass_header Authorization;
     }
 
     location ~ /\.ht {
@@ -77,16 +85,27 @@ server {
         }
     }
 
-    location /recipes {
+    location /recipes/ {
         alias /usr/local/src/recipes;
         index index.html;
         try_files $uri $uri/ =404;
     }
 
-    location /blog {
+    location /blog/ {
         alias /usr/local/src/blog;
         index index.html;
         try_files $uri $uri/ =404;
+    }
+
+    location /radicale/ {
+        proxy_pass        http://localhost:5232/; # The / is important!
+        proxy_set_header  X-Script-Name /radicale;
+        proxy_set_header  X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header  X-Remote-User $remote_user;
+        proxy_set_header  Host $http_host;
+        proxy_pass_header Authorization;
+        auth_basic        "Radicale - Password Required";
+        auth_basic_user_file /var/lib/radicale/users;
     }
 
     location ~ /\.ht {
