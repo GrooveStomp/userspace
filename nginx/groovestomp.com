@@ -40,6 +40,55 @@ server {
         proxy_pass_header Authorization;
     }
 
+    location /bookmarks {
+        alias /usr/local/src/shaarli;
+        index index.php;
+        try_files _ /index.php$is_args$args;
+
+        location /bookmarks {
+            if ($request_uri ~ ^([^.\?]*[^/])$) {
+                return 301 $1/;
+            }
+        }
+
+        location /bookmarks/ {
+            index index.php;
+        }
+
+        # increase the maximum file upload size if needed: by default nginx limits file upload to 1MB (413 Entity Too Large error)
+        client_max_body_size 100m;
+
+        location ~ (index)\.php$ {
+            # try_files $uri =404;
+            # slim API - split URL path into (script_filename, path_info)
+            fastcgi_split_path_info ^(.+\.php)(/.+)$;
+            # pass PHP requests to PHP-FPM
+            include snippets/fastcgi-php.conf;
+            fastcgi_param SCRIPT_FILENAME $request_filename;
+            fastcgi_pass unix:/run/php/php7.3-fpm.sock;
+            # fastcgi_index index.php;
+            # include fastcgi.conf;
+        }
+
+        location ~ /bookmarks/doc/html/ {
+            default_type "text/html";
+            try_files $uri $uri/ $uri.html =404;
+        }
+
+        location = /bookmarks/favicon.ico {
+            # serve the Shaarli favicon from its custom location
+            alias /usr/local/src/shaarli/assets/vintage/img/favicon.ico;
+        }
+
+        # allow client-side caching of static files
+        location ~* \.(?:ico|css|js|gif|jpe?g|png|ttf|oet|woff2?)$ {
+            expires    max;
+            add_header Cache-Control "public, must-revalidate, proxy-revalidate";
+            # HTTP 1.0 compatibility
+            add_header Pragma public;
+        }
+    }
+
     location ~ /\.ht {
         deny all;
     }
@@ -106,6 +155,55 @@ server {
         proxy_pass_header Authorization;
         auth_basic        "Radicale - Password Required";
         auth_basic_user_file /var/lib/radicale/users;
+    }
+
+    location /bookmarks {
+        alias /usr/local/src/shaarli;
+        index index.php;
+        try_files _ /index.php$is_args$args;
+
+        location /bookmarks {
+            if ($request_uri ~ ^([^.\?]*[^/])$) {
+                return 301 $1/;
+            }
+        }
+
+        location /bookmarks/ {
+            index index.php;
+        }
+
+        # increase the maximum file upload size if needed: by default nginx limits file upload to 1MB (413 Entity Too Large error)
+        client_max_body_size 100m;
+
+        location ~ (index)\.php$ {
+            # try_files $uri =404;
+            # slim API - split URL path into (script_filename, path_info)
+            fastcgi_split_path_info ^(.+\.php)(/.+)$;
+            # pass PHP requests to PHP-FPM
+            include snippets/fastcgi-php.conf;
+            fastcgi_param SCRIPT_FILENAME $request_filename;
+            fastcgi_pass unix:/run/php/php7.3-fpm.sock;
+            # fastcgi_index index.php;
+            # include fastcgi.conf;
+        }
+
+        location ~ /bookmarks/doc/html/ {
+            default_type "text/html";
+            try_files $uri $uri/ $uri.html =404;
+        }
+
+        location = /bookmarks/favicon.ico {
+            # serve the Shaarli favicon from its custom location
+            alias /usr/local/src/shaarli/assets/vintage/img/favicon.ico;
+        }
+
+        # allow client-side caching of static files
+        location ~* \.(?:ico|css|js|gif|jpe?g|png|ttf|oet|woff2?)$ {
+            expires    max;
+            add_header Cache-Control "public, must-revalidate, proxy-revalidate";
+            # HTTP 1.0 compatibility
+            add_header Pragma public;
+        }
     }
 
     location ~ /\.ht {
