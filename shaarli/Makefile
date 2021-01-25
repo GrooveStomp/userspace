@@ -6,4 +6,3 @@ help:
 
 install:
 	setup.sh
-	cp config /var/lib/radicale/
