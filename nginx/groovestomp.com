@@ -20,19 +20,19 @@ server {
         }
     }
 
-    location /recipes/ {
+    location /recipes {
         alias /usr/local/src/recipes;
         index index.html;
         try_files $uri $uri/ =404;
     }
 
-    location /blog/ {
+    location /blog {
         alias /usr/local/src/blog;
         index index.html;
         try_files $uri $uri/ =404;
     }
 
-    location /radicale/ {
+    location /meet {
         proxy_pass        http://localhost:5232/; # The / is important!
         proxy_set_header  X-Script-Name /radicale;
         proxy_set_header  X-Forwarded-For $proxy_add_x_forwarded_for;
@@ -134,19 +134,19 @@ server {
         }
     }
 
-    location /recipes/ {
+    location /recipes {
         alias /usr/local/src/recipes;
         index index.html;
         try_files $uri $uri/ =404;
     }
 
-    location /blog/ {
+    location /blog {
         alias /usr/local/src/blog;
         index index.html;
         try_files $uri $uri/ =404;
     }
 
-    location /radicale/ {
+    location /meet {
         proxy_pass        http://localhost:5232/; # The / is important!
         proxy_set_header  X-Script-Name /radicale;
         proxy_set_header  X-Forwarded-For $proxy_add_x_forwarded_for;
@@ -175,7 +175,7 @@ server {
         # increase the maximum file upload size if needed: by default nginx limits file upload to 1MB (413 Entity Too Large error)
         client_max_body_size 100m;
 
-        location ~ (index)\.php$ {
+        location ~ /bookmarks/(index)\.php$ {
             # try_files $uri =404;
             # slim API - split URL path into (script_filename, path_info)
             fastcgi_split_path_info ^(.+\.php)(/.+)$;
