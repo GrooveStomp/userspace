@@ -16,3 +16,9 @@ Radicale Caldav/Cardav server
 - Create the radicale user if it isn't present in `/etc/passwd`.
 - Create `/var/lib/radicale` and copy the config there.
 - Install the radicale systemd unit, enable it and start it.
+
+# Additional Reading
+This configuration reads a pasword file from /var/lib/radicale/users.
+This file should be generated like so:
+
+    htpasswd -c /var/lib/radicale/users my_user
