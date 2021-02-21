@@ -10,6 +10,5 @@ if [[ -z $(which gpg) ]]; then
     exit
 fi
 
-gpg --decrypt --quiet psql_password.gpg | xargs -0 urlencode > password
-
-rm -f password
+PASSWORD=$(gpg --decrypt --quiet psql_password.gpg | xargs -0 urlencode)
+sed -e "s/<PASSWORD>/${PASSWORD}/" miniflux.conf.template > miniflux.conf
